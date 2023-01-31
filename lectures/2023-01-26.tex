@@ -1,0 +1,165 @@
+%!TEX root = ../notes.tex
+\section{January 26, 2023}
+\subsection{Introductions}
+\textbf{Instructor:} Javi G\'omez Serrano. Email: \href{mailto:javier_gomez_serrano@brown.edu}{javier\_gomez\_serrano@brown.edu}.
+
+\textbf{Text:} \emph{Principles of Mathematical Analysis}\footnote{Find online using \emph{appropriate channels}.}, W. Rudin \cite{rudin1976principles}. We will cover select chapters of this book. If the pace is too fast, bring it up.
+
+\textbf{Structure:} Biweekly HW with problems from the book and extra problems. Homework posted Thursdays. Roughly 6 homework assignments (maybe 5, or 7). Worst homework will be dropped.
+
+Midterm and final, in class (TBA). There will additionally be 2 quizzes (20 minutes each), which should be extremely easy. There are 2 questions from the quizzes: one will literally be a problem from the homework, and one will be a definition.
+
+Grading potentially returned by Tuesday following submission. Grading is as follows: 30\% problem sets, 10\% quizzes, 25\% midterm, 35\% final. There will be a curve.
+
+\textbf{Office Hours:} Kassar 314, Monday 5-7pm.
+
+\subsection{Fundamentals}
+\subsubsection{Sets}
+\begin{definition}[Set]
+    One can think of a \ul{set} as a collection of objects.
+
+    If $a$ is an object, and $A$ is a set. $a\in A$ means that $a$ is a \ul{member} of $A$.
+\end{definition}
+\begin{definition}[Subsets]
+    If $A, B$ are sets, we say that $A$ is a \ul{subset} of $B$ (we write $A\subset B$\footnote{Some also write $A\subseteq B$.}) whenever $a\in A\implies a\in B$.
+
+    $A$ is a \ul{proper} subset of $B$ if $A\subset B$ and $A\neq B$.
+\end{definition}
+\begin{remark}
+    $\emptyset$ is the set with no elements. $\emptyset$ is a subset of \emph{every} set.
+\end{remark}
+\begin{definition}[Union]
+    If $A, B$ are sets, $A\cup B$ is the \ul{union} of $A$ and $B$.
+    \[A\cup B \overset{\text{def}}{=}\left\{ a\mid a\in A \text{ or }a\in B \right\}\]
+\end{definition}
+\begin{definition}[Intersection]
+    If $A, B$ are sets, $A\cap B$ is the \ul{intersection} of $A$ and $B$.
+    \[A\cap B \overset{\text{def}}{=}\left\{ a\mid a\in A \text{ and }a\in B \right\}\]
+\end{definition}
+We can generalize this to an arbitrary number of sets:
+\begin{definition}[Generalization of Union/Intersection]
+    If $\mathcal{C}$ is a collection of sets (possibly infinite). Then
+    \[\bigcup_{A\in \mathcal{C}}A \overset{\text{def}}{=} \{a\mid a\in A \text{ for some }a\in \mathcal{C}\}\]
+    and
+    \[\bigcap_{A\in \mathcal{C}}A \overset{\text{def}}{=} \{a\mid a\in A \text{ for all }A\in \mathcal{C}\}\]
+\end{definition}
+\begin{definition}[Disjunction]
+    We say that $A$ and $B$ are \ul{disjoint} if $A\cap B = \emptyset$.
+\end{definition}
+\begin{proposition}[Distribution over intersection and union]
+    The following is true:
+    \begin{enumerate}
+        \item $A\cap(B\cup C) = (A\cap B) \cup (A\cap C)$
+        \item $A\cup(B\cap C) = (A\cup B) \cap (A\cup C)$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}[Proof of statement 1.]
+    We prove that the sets on the left are contained in the sets on the right, and the sets on the right are contained on the sets on the left. That is, $X\subset Y$ and $Y\subset X$ $\Rightarrow$ $X = Y$.
+
+    \begin{description}
+        \item[Case $A\cap(B\cup C)\subset(A\cap B) \cup (A\cap C)$:] Let $a\in A\cap (B\cup C)$. Then $a\in A$ and $a\in (B\cup C)$. So $a\in B$ or $a\in C$.
+
+            Suppose $a\in B$, then $a\in A\cap B$ so $a\in (A\cap B)\cup (A\cap C)$. Suppose $a\in C$, then $a\in A\cap B$ so still $a\in (A\cap B)\cup (A\cap C)$.
+
+            Regardless, this is precisely the set on the right.
+        \item[Case $(A\cap B) \cup (A\cap C)\subset A\cap(B\cup C)$:] Let $a\in (A\cap B) \cup (A\cap C)$. Then $a\in (A\cap B)$ or $a\in (A\cap C)$.
+
+            If $a\in (A\cap B)$, then $a\in A$ and $a\in B$, so $a\in A$ and $a\in B\cup C$, so $a\in A\cap(B\cup C)$.
+
+            If $a\in (A\cap C)$, then $a\in A$ and $a\in C$, so $a\in A$ and $a\in B\cup C$, so still $a\in A\cap (B\cup C)$.
+
+            Again, regardless, $a\in A\cap (B\cup C)$.
+    \end{description}
+    Having proven containment in both directions, we conclude the sets on the left and right are equal.
+\end{proof}
+
+\begin{definition}[Set Difference]
+    We define the \ul{difference} $A\setminus B$ as
+    \[A\setminus B = \{a\mid a\in A, a\not\in B\}.\]
+    \begin{center}
+        \includegraphics[width=0.3\textwidth]{images/set_difference.png}
+    \end{center}
+\end{definition}
+\begin{definition}[Symmetric Difference]
+    We define the \ul{symmetric difference}
+    \[A\triangle B = (A\setminus B)\cup (B\setminus A).\]
+    \begin{center}
+        \includegraphics[width=0.3\textwidth]{images/set_sym_difference.png}
+    \end{center}
+\end{definition}
+\begin{definition}[Set Product]
+    We define the \ul{product} of $A$ and $B$ as
+    \[A\times B = \{(a, b)\mid a\in A, b\in B\}\]
+\end{definition}
+
+\subsubsection{Relations}
+\begin{definition}[Relations]
+    A \ul{relation} $R$ between sets $A$ and $B$ is any subset of $A\times B$.
+
+    If $(a, b)\in R$, we will think of $a$ ``being related'' to $b$.
+\end{definition}
+
+For now, consider $A = B$. We define a special set of relations.
+\begin{definition}[Reflexive/Symmetric/Transitive Relations]\label{defn:rst-relations}
+    We have the following definitions:
+    \begin{enumerate}
+        \item $R$ is \ul{reflexive} iff $(a, a)\in R, \forall a\in A$.\footnote{$\forall$ is to say `for all'.}
+        \item $R$ is \ul{symmetric} iff whenever $(a_1, a_2)\in R$, then $(a_2, a_1)\in R$.
+        \item $R$ is \ul{transitive} iff whenever $(a_1, a_2)\in R$, and $(a_2, a_3)\in R$, then $(a_1, a_3)\in R$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Equivalence Relation]
+    A relation $R$ that satisfies all conditions 1-3 in \cref{defn:rst-relations} is called an \ul{equivalence relation}.
+\end{definition}
+
+\begin{definition}[Equivalence Class]
+    Given an element $a\in A$ with relation $R$, we write
+    \[[a]_R \overset{\text{def}}{=} \{a' \in A\mid (a, a')\in R\}\]
+    as the \ul{equivalence class} of $a$ (the set of all elements that are `related' to $a$).
+\end{definition}
+\begin{remark}
+    Instead of writing $(a, a')\in R$, we write $a\sim_R a'$ or $a\sim a'$.
+\end{remark}
+
+\begin{proposition}[Distinct Equivalence Classes are Disjoint]
+    If $R$ be an equivalence relation on $A$. Suppose $a_1, a_2\in A$. Then, either
+    \[[a_1]_R = [a_2]_R\quad \text{or}\quad [a_1]_R\cap [a_2]_R = \emptyset\]
+\end{proposition}
+\begin{proof}
+    We show that these statements cannot happen simultaneously, and that one or the other \emph{must} be true.
+
+    The former is as follows: notice $a_1\in [a_1]_R$ because $a_1\sim a_1$ by $R$ reflexive. Since $[a_1]_R = [a_2]_R$, then $a_1\in [a_1]_R\cap [a_2]_R$. This implies that the intersection $[a_1]_R\cap [a_2]_R$ is nonempty, which is a contradiction.
+
+    We now show that at least one has to happen. If $a_1\in [a_1]_R\cap [a_2]_R = \emptyset$, we are done. Otherwise, if $a_1\in [a_1]_R\cap [a_2]_R \neq \emptyset$, then $\exists\footnote{$\exists$ is to denote `there exists'.}a\in A$ such that $a\in[a_1]_R$ and $a\in[a_2]_R$.
+
+    We claim \textsc{wlog} $[a]_R = [a_1]_R$. Suppose $a'\in [a]_R$, then $(a, a')\in R$. Since $(a,a')\in R$ and $(a_1, a)\in R$ (due to $a\in [a_1]_R$), transitivity gives $(a_1, a')\in R$ so $a'\in[a_1]_R$. Let's otherwise suppose $a'\in [a_1]_R$, so $(a_1, a')\in R$. Reflexivity gives $(a, a_1)\in R$ ($(a_1, a)\in R$ by $a\in [a_1]_R$), and by transitivity $(a,a_1)\in R$ and $(a_1, a')\in R$ gives $(a, a')\in R$ so $a'\in [a]_R$.\footnote{Wow, this is quite dense but the idea is to chain reflexivity and transitivity to get everything related to one another.}
+
+    By symmetry, $[a]_R = [a_2]_R$, so $[a_1]_R = [a]_R = [a_2]_R$ which is as desired.
+\end{proof}
+
+Essentially, what we have shown, is that we can partition a set according to equivalence classes. All equivalence classes are either going to be the same or different. This is, equivalence relations form a \emph{partition} of a set. We can construct a set of partitions (disjoint subsets) of a set $S$. That is, ``equivalence classes partition $A$.''
+
+\begin{definition}[Partition]
+    A \ul{partition} of $A$ is a collection $\mathcal{P}$ of subsets of $A$ such that
+    \begin{enumerate}
+        \item $A = \bigcap_{S\in \mathcal{P}}S$,
+        \item $S_i\cap S_j = \emptyset$ if $S_i\neq S_j$ for each $S_i, S_j\in \mathcal{P}$.
+    \end{enumerate}
+\end{definition}
+
+With this definition, if $R$ is an equivalence relation, then $\mathcal{C}_R = \{[a]_R\mid a\in A\}$ is a partition of $A$.
+
+We'll use all of this to define a function (which is the whole purpose of this course).
+
+\subsubsection{Functions}
+\begin{definition}[Function]
+    Let $A, B$ be sets and $f$ be a relation between $A$ and $B$.
+
+    We say $f$ is a \ul{function} from $A$ to $B$ and we write $f: A\to B$ iff the following holds:
+    \begin{enumerate}
+        \item $\forall a\in A$, there exists \emph{at least} one $b\in B$ s.t. $(a, b)\in f$. (all elements have an image)
+        \item $\forall a\in A$, there exists \emph{at most} one $b\in B$ s.t. $(a, b)\in f$. (all elements have only one image)
+    \end{enumerate}
+    We write $f(a) = b$, and $b$ is the \ul{image} of $a$ by $f$. We call $A$ the domain of $f$, and $B$ the codomain of $f$\footnote{I like to denote $B$ the codomain and the actual set of images the \emph{image} of $f$. And `range' is just ambiguous it seems.}.
+\end{definition}
