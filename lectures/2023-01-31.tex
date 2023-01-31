@@ -7,19 +7,27 @@ We introduce some properties of functions:
     A function $f: A\to B$ is \ul{injective} (one-to-one) if
     \[f(a_1) = f(a_2)\implies a_1 = a_2.\]
     ``No two elements in $A$ map to the same element in $B$.''
+    \begin{center}
+        \includegraphics[width=0.2\linewidth]{images/injective.png}
+
+        (Using $X$ and $Y$, injective but not surjective.)
+    \end{center}
 \end{definition}
 
 \begin{definition}[Surjectivity]
     A function $f: A\to B$ is \ul{surjective} (onto) if
     \[\forall b\in B, \exists a\in A, \text{ s.t. }f(a) = b.\]
     ``Every element in $B$ has a preimage in $A$.''
-    % \todo{Diagram}
+    \begin{center}
+        \includegraphics[width=0.2\linewidth]{images/surjective.png}
+
+        (Using $X$ and $Y$, surjective but not injective.)
+    \end{center}
 \end{definition}
 
 \begin{definition}[Functional Composition]
     Suppose $f: A\to B$ and $g: B\to C$ are functions, then $(g\circ f): A\to C$ with
     \[(g\circ f)(a) := g(f(a)).\]
-    % \todo{Diagram}
 \end{definition}
 
 \begin{proposition}
