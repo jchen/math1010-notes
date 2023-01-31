@@ -2,6 +2,7 @@
 \section{January 31, 2023}
 
 \subsection{Properties of Functions}
+We introduce some properties of functions:
 \begin{definition}[Injectivity]
     A function $f: A\to B$ is \ul{injective} (one-to-one) if
     \[f(a_1) = f(a_2)\implies a_1 = a_2.\]
@@ -17,7 +18,7 @@
 
 \begin{definition}[Functional Composition]
     Suppose $f: A\to B$ and $g: B\to C$ are functions, then $(g\circ f): A\to C$ with
-    \[(g\circ f)(a) := g(f(a))\]
+    \[(g\circ f)(a) := g(f(a)).\]
     % \todo{Diagram}
 \end{definition}
 
@@ -113,7 +114,7 @@ If $f: A\to B$ is not a bijection, we cannot define an inverse in the same way a
 
 \begin{definition}[Inverse Image]
     Given function $f: A\to B$, $C\subseteq B$ we define the \ul{inverse image} of $C$ as
-    \[f^{-1}(C) := \left\{ a\in A\mid f(a)\in C \right\}\]
+    \[f^{-1}(C) := \left\{ a\in A\mid f(a)\in C \right\}.\]
     ``The set of $a\in A$ that take me somewhere in $C$.''
 \end{definition}
 
@@ -121,3 +122,54 @@ If $C = \{b\}$, we get all elements mapped to $b$. That is,
 \[f^{-1}(\{b\}) = \left\{ a\in A\mid f(a) = b \right\}\]
 
 \subsection{Cardinality}
+\begin{definition}[Cardinality]
+    If $A, B$ are sets, we say that $A$ and $B$ are equivalent ($A\simeq B)$ if there exists a bijective $f: A\to B$. This is an equivalence relation.
+
+    The \ul{cardinality} of a set $A$ ($\#(A)$) is the equivalence class of $A$ under this relation:
+    \[\#(A) := \{B\mid A\simeq B\}.\]
+\end{definition}
+
+\begin{remark}
+    When $A$ is finite with $n$ elements, this is an abuse of notation. $\#(A)$ is the set of all sets with $n$ elements, or we also say the `cardinality' of $A$ is simply $n$.
+\end{remark}
+
+\begin{example}
+    Consider $\ZZ$, the set of integers. Consider $2\ZZ$, the set of even integers. They belong to the same cardinality. Even though they are infinite sets, they are the `same level' of infinite\footnote{Even though we might think that $2\ZZ\subseteq \ZZ$.}.
+
+    Specifically, we have bijection $f: \ZZ\to 2\ZZ$ with $x\mapsto 2x$.
+\end{example}
+
+\subsection{Natural Numbers}
+We'll assume the Peano Axioms, which are the following:
+\begin{enumerate}[A.]
+    \item $\exists \NN$, an element $1\in \NN$.
+    \item a function $s: \NN\to \NN$ satisfying
+          \begin{enumerate}[(1)]
+              \item $\forall n\in \NN, s(n) \neq 1$,
+              \item $s$ is injective,
+              \item if $\exists S$, such that $1\in S\subset \NN$, and $S$ satisfies that whenever $n\in S$, then $s(n)\in S$, this implies $S = \NN$.
+          \end{enumerate}
+\end{enumerate}
+
+Why do we need condition (3)?
+\begin{example}
+    Picking the half integers
+    \[\left\{\frac{n}{2}\mid n\in \NN\right\}\]
+    satisfies the first two conditions but not the third.
+\end{example}
+
+$s$ is called the \emph{successor} function.
+
+\begin{proposition}
+    For every $n\in \NN$, $s(n)\neq n$.
+\end{proposition}
+\begin{proof}
+    Let
+    \[S = \left\{ n\in \NN\mid s(n) \neq n \right\}.\]
+    Clearly, $1\in S$ by axiom (1). Suppose $n\in S$ for some $n$. We claim that $s(n)\in S$. By the injectivity of $s$, $s(n)\neq n$ so $s(s(n)) \neq s(n)$.
+
+    By (3), $S = \NN$ which gives $s(n)\neq n, \forall n$. We can never loop when we keep applying $s$.
+\end{proof}
+\begin{definition}[Natural Number]
+    We'll call $s(1) = 2, s(2) = 3, \dots$. These are the natural numbers.
+\end{definition}
