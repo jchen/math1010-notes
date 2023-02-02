@@ -21,7 +21,7 @@ Grading potentially returned by Tuesday following submission. Grading is as foll
     If $a$ is an object, and $A$ is a set. $a\in A$ means that $a$ is a \ul{member} of $A$.
 \end{definition}
 \begin{definition}[Subsets]
-    If $A, B$ are sets, we say that $A$ is a \ul{subset} of $B$ (we write $A\subset B$\footnote{Some also write $A\subseteq B$.}) whenever $a\in A\implies a\in B$.
+    If $A, B$ are sets, we say that $A$ is a \ul{subset} of $B$ (we write $A\subset B$\framedfootnote{Some also write $A\subseteq B$.}) whenever $a\in A\implies a\in B$.
 
     $A$ is a \ul{proper} subset of $B$ if $A\subset B$ and $A\neq B$.
 \end{definition}
@@ -41,7 +41,7 @@ We can generalize this to an arbitrary number of sets:
     If $\mathcal{C}$ is a collection of sets (possibly infinite). Then
     \[\bigcup_{A\in \mathcal{C}}A \overset{\text{def}}{=} \{a\mid a\in A \text{ for some }a\in \mathcal{C}\}\]
     and
-    \[\bigcap_{A\in \mathcal{C}}A \overset{\text{def}}{=} \{a\mid a\in A \text{ for all }A\in \mathcal{C}\}\]
+    \[\bigcap_{A\in \mathcal{C}}A \overset{\text{def}}{=} \{a\mid a\in A \text{ for all }A\in \mathcal{C}\}.\]
 \end{definition}
 \begin{definition}[Disjunction]
     We say that $A$ and $B$ are \ul{disjoint} if $A\cap B = \emptyset$.
@@ -103,7 +103,7 @@ For now, consider $A = B$. We define a special set of relations.
 \begin{definition}[Reflexive/Symmetric/Transitive Relations]\label{defn:rst-relations}
     We have the following definitions:
     \begin{enumerate}
-        \item $R$ is \ul{reflexive} iff $(a, a)\in R, \forall a\in A$.\footnote{$\forall$ is to say `for all'.}
+        \item $R$ is \ul{reflexive} iff $(a, a)\in R, \forall a\in A$.\framedfootnote{$\forall$ is to say `for all'.}
         \item $R$ is \ul{symmetric} iff whenever $(a_1, a_2)\in R$, then $(a_2, a_1)\in R$.
         \item $R$ is \ul{transitive} iff whenever $(a_1, a_2)\in R$, and $(a_2, a_3)\in R$, then $(a_1, a_3)\in R$.
     \end{enumerate}
@@ -161,5 +161,5 @@ We'll use all of this to define a function (which is the whole purpose of this c
         \item $\forall a\in A$, there exists \emph{at least} one $b\in B$ s.t. $(a, b)\in f$. (all elements have an image)
         \item $\forall a\in A$, there exists \emph{at most} one $b\in B$ s.t. $(a, b)\in f$. (all elements have only one image)
     \end{enumerate}
-    We write $f(a) = b$, and $b$ is the \ul{image} of $a$ by $f$. We call $A$ the domain of $f$, and $B$ the codomain of $f$\footnote{I like to denote $B$ the codomain and the actual set of images the \emph{image} of $f$. And `range' is just ambiguous it seems.}.
+    We write $f(a) = b$, and $b$ is the \ul{image} of $a$ by $f$. We call $A$ the domain of $f$, and $B$ the codomain of $f$\framedfootnote{I like to denote $B$ the codomain and the actual set of images the \emph{image} of $f$. And `range' is just ambiguous it seems.}.
 \end{definition}

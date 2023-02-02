@@ -1,0 +1,163 @@
+%!TEX root = ../notes.tex
+\section{February 2, 2023}
+\subsection{Natural Numbers, \emph{continued}}
+\recall we defined the natural numbers $\NN$. We had a \emph{successor} function $s$ where $2 = s(1)$, $3 = s(2)$, and so on\dots
+
+\begin{definition}
+    We define
+    \begin{enumerate}[a.]
+        \item For any $n\in \NN$, $n+1 := s(n)$.
+        \item For every $m, n\in\NN$ $n + s(m) := s(n + m)$.
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    We can check that
+    \begin{enumerate}
+        \item $\forall m, n\in \NN$, $m+n = n+m$.
+        \item $\forall n, m, r\in\NN$,
+              \[m + (n + r) = (m + n) + r\]
+        \item $\forall n, m\in \NN$, $n + m\neq N$.\framedfootnote{We note that $0\not\in\NN$.}
+        \item $s$ is a bijection from $\NN$ to $\NN\setminus\{1\}$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}[Proof of 4]
+    We note that by the Peano axioms, $s$ doesn't map any element to $1$. Then, $s: \NN\to\NN\setminus\{1\}$.
+
+    We show that $s$ is bijective. Consider
+    \[S = \{1\}\cup \left\{ s(n)\mid n\in\NN \right\}.\]
+    Suffices to show that $S = \NN$. We know that $1\in S$ by construction, and if $n\in S$, $n\in \NN$, $s(n)\in S$ by construction, then by axiom (3), $S = \NN$.
+
+    Hence if $k\neq 1$, $\exists n$ such that $k = s(n)$. Since $s$ is injective by axiom (2), $s$ is bijective.
+\end{proof}
+
+Now that we have a bijection, we can define predecessors:
+
+\begin{definition}[Predecessor]
+    We can define $n-1$ for $n\neq 1$ by saying that $n-1$ is the element such that
+    \[(n-1) + 1 = n.\]
+\end{definition}
+
+\begin{definition}[Ordering]
+    We say that $m\leq n$ for $m, n\in\NN$ if either $m = n$ or $m + a = n$ for some $a\in \NN$.
+
+    Moreover, ``$\leq$'' is a partial order that satisfies $\forall m, n \in\NN$, $m\leq n$ or $n\leq m$ (which makes $\leq$ a total order).
+\end{definition}
+
+\begin{definition}[Partial Order]
+    A partial order $R$ is a relation such that
+    \begin{enumerate}
+        \item $a R a$,
+        \item $a R b, b R a \Rightarrow a = b$,
+        \item $a R b, b R c \Rightarrow a R c$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Multiplication]
+    We define multiplication by
+    \begin{align*}
+        \forall n\in\NN, \qquad n\cdot 1 & = n             \\
+        n\cdot s(m)                      & = n + n\cdot m.
+    \end{align*}
+\end{definition}
+
+\begin{proposition}
+    Our definition of multiplication satisfies the following: $\forall n, m, r, s\in\NN$,
+    \begin{enumerate}
+        \item \emph{(Distributivity)} $n\cdot(m + r) = n\cdot m + n\cdot r$
+        \item \emph{(Commutativity)} $n\cdot m = m\cdot n$
+        \item \emph{(Associativity)} $(n\cdot m)\cdot r = n\cdot (m\cdot r)$
+        \item If $n < m$ and $r \leq s$, then $r\cdot n < s\cdot m$.
+    \end{enumerate}
+\end{proposition}
+
+\subsection{Cardinality \& Natural Numbers}
+For each $n\in\NN$, consider
+\[J_n = \left\{ m\in\NN\mid m\leq n \right\}.\]
+That is, $J_1 = \{1\}$, $J_2 = \{1, 2\}$.
+\begin{proposition}
+    For $n\geq 1$,
+    \[J_{n+1} = J_n\cup \left\{ n+1 \right\}.\]
+\end{proposition}
+\begin{proof}
+    We prove by showing subset inclusion in both directions:
+    \begin{description}
+        \item[$\supset$:] Let $k\in J_n\cup \{n+1\}$. If $k = n+1$, $k\in J_{n+1}$. If $k\in J_n$, then $k\leq n$ and since $n\leq n+1\Rightarrow k\leq n+1\Rightarrow k\in J_{n+1}$.
+        \item[$\subset$:] Let $k\in J_{n+1}$. If $k\in J_n$, we are done. If $k\not\in J_n$, then $k \not\leq n \Rightarrow k \geq n+1$. But $k\in J_{n+1}\Rightarrow k\leq n+1$. So necessarily, $k = n+1$.
+    \end{description}
+    Which is as desired.
+\end{proof}
+
+\begin{definition}[Cardinality, \emph{again}]
+    We say that a set $A$ has \ul{cardinality}\framedfootnote{This is unfortunately an abuse of notation.} $n$ if
+    \[A\simeq\framedfootnote{We use $\sim$ to denote a relation, and $\simeq$ to denote a bijection.} J_n\framedfootnote{This is in a model that assumes $0\in\NN$, unfortunately, which is a bit confusing.}.\]
+    In this case, we say $A$ is finite and write $\#(A) = n$.
+
+    If $A$ is not related to any $J_n$, we say that $A$ is \ul{infinite}.
+\end{definition}
+
+\begin{lemma}
+    Let $A, B$ be finite\framedfootnote{They don't need to be finite, but then the comparison of cardinalities is a bit wishy-washy.} sets. If $A\subset B$, then $\#(A)\leq \#(B)$.
+\end{lemma}
+\begin{proof}
+    Define $f : A\to B$ with $a\mapsto a$. $f$ is injective by definition.
+
+    This is a bijection with a subset of $B$, therefore the cardinality has to satisfy $\#(A)\leq \#(B)$.
+\end{proof}
+
+\begin{theorem}\label{thm:NN-countable-infinity}
+    $\forall n\in \NN$,
+    \[\#(J_n) < \#(J_{n+1}) < \#(\NN)\]
+\end{theorem}
+\begin{proof}
+    If we replace the first $<$ by $\leq$, then this is easy by the previous lemma.
+
+    We assume we already know\footnote{Note from me: why can't we claim $\#(J_n) = n$ by definition of cardinality?}
+    \begin{equation}\label{eqn:cardinalities-theorem-assumption}
+        \#(J_n)\neq \#(J_{n+1}), \forall n,
+    \end{equation}
+    we want to show that $\#(J_n)\neq \#(\NN), \forall n$.
+
+    Assume there exists some $n$ such that
+    \[\#(\NN) = \#(J_n)\]
+    Then we have
+    \[\#(J_{n+1})\leq \#(\NN) = \#(J_n)\]
+    which is a contradiction.
+\end{proof}
+
+\begin{proof}[Proof of \cref{eqn:cardinalities-theorem-assumption}]
+    We induct on $n$.
+    \begin{description}
+        \item[Base case $n = 1$.] $J_1 = \{1\}$ and $J_2 = \{1, 2\}$. Then $\#(J_1) < \#(J_2)$, since we can't define a bijection.
+        \item[Inductive step.] Suppose that $\#(J_n)\neq \#(J_{n+1})$. We wish to prove $\#(J_{n+1}) \neq \#(J_{n+2})$. By contraposition, assume there exists a bijection $f: J_{n+1}\to J_{n+2}$. Then, $\exists k\in J_{n+1}$ such that $f(k) = n + 2$. Define $h: J_{n+1}\to J_{n+1}$ by
+            \[h(m) := \begin{cases}
+                    m   & \text{if }m\not\in \{k, n+1\} \\
+                    m+1 & \text{if }m=k                 \\
+                    k   & \text{if }m = n+1
+                \end{cases}\]
+            Let $\hat f = f\circ h : J_{n+1} \to J_{n+2}$, a bijection. $\hat f$ maps $n+1\mapsto n+2$. Defining $g(x) = \hat f(x)$ for $x\in J_n$ ($\hat f$ restricted to $J_n$ so $g : J_n\to J_{n+1}$) completes the contraposition.
+    \end{description}
+    Which gives the general statement of \cref{eqn:cardinalities-theorem-assumption}.
+\end{proof}
+
+\begin{corollary}
+    If $A\simeq \NN$, $A$ is infinite.
+
+    We say in this case that $A$ is \ul{countable}.
+
+    If $A$ is infinite and $\#(A)\neq \#(\NN)$\framedfootnote{That is, $A\not\simeq \NN$.}, then we say that $A$ is \ul{uncountable}.
+\end{corollary}
+\begin{proof}
+    If $A$ were finite, then $A\simeq J_n$ for some $n$ which is impossible by \cref{thm:NN-countable-infinity}.
+\end{proof}
+\begin{example}
+    $\NN$ is countable, $\QQ$ is countable, $\RR$ is uncountable.
+\end{example}
+
+\begin{corollary}
+    Let $S$ be an infinite subset of $\NN$. Then $S$ is countably infinite.
+\end{corollary}
+
+\begin{definition}[Countability]
+    We say that $A$ is \ul{countable} if $A$ is finite or countable infinite.
+\end{definition}

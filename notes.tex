@@ -9,6 +9,15 @@
 \usetikzlibrary{cd}
 \numberwithin{equation}{section}
 
+\usepackage{tablefootnote} 
+\makeatletter 
+\AfterEndEnvironment{mdframed}{%
+ \tfn@tablefootnoteprintout% 
+ \gdef\tfn@fnt{0}% 
+}
+\makeatother
+\newcommand{\framedfootnote}{\tablefootnote}
+
 \usepackage[all,cmtip]{xy}
 
 \begin{document}
@@ -27,5 +36,6 @@
 \newpage
 \input{lectures/2023-01-26.tex}
 \input{lectures/2023-01-31.tex}
+\input{lectures/2023-02-02.tex}
 
 \end{document}
