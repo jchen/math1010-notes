@@ -415,3 +415,13 @@
 
 \newcommand{\bvec}[1]{\vec{\mathbf{#1}}}
 \DeclareMathOperator{\Id}{\mathrm{id}}
+
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cB}{\mathcal B}
+\newcommand{\cC}{\mathcal C}
+\newcommand{\cD}{\mathcal D}
+\newcommand{\cE}{\mathcal E}
+\newcommand{\cF}{\mathcal F}
+\newcommand{\cG}{\mathcal G}
+
+\newcommand{\intentionalpagebreak}{\begin{center}\emph{(continued on next page, intentially blank)}\end{center}\pagebreak}
