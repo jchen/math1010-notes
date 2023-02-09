@@ -1,0 +1,178 @@
+%!TEX root = ../notes.tex
+\section{February 9, 2023}
+\subsection{Real Numbers, \emph{continued}}
+\recall from last time that we were trying to prove
+\begin{theorem*}
+    $\forall x\in \RR, x > 0$ and $\forall n\in \NN, n > 0$,
+    \[\exists! y > 0 \text{ s.t. }y^n = x.\]
+\end{theorem*}
+\begin{proof}
+    Define $E$ as
+    \[E := \left\{ t\mid t^n < x \right\}.\]
+    $E$ has an upper bound $x$ and by the least upper bound property, $\exists y = \sup(E)$.
+
+    Our objective is to show that $y^n = x$. We use the identity that
+    \begin{align*}
+        b^n - a^n & = (b-a)(b^{n-1} + ab^{n-2} + a^2b^{n-3} + \cdots + a^{n-1}).
+        \intertext{Assuming that $a, b$ positive, and bounding $b^{n-1} + ab^{n-2} + \cdots < nb^{n-1}$,}
+        b^n - a^n & < (b-a)nb^{n-1}
+    \end{align*}
+    if $0 < a < b$.
+
+    For the sake of contradiction, first assume $y^n < x$. Choose $0 < h < 1$ such that
+    \[h < \frac{x - y^n}{n(y+1)^{n-1}}.\]
+    Then, $(y+1)^n - y^n < hn(y+h)^{n-1}$, this is also bounded by $<hn(y+1)^{n-1} = x-y^n$ so we have that $(y+h)^n < x$.
+
+    Then $y+h\in E$. But we defined $y$ to be the supremum of $E$, which is a contradiction.
+
+    We complete our `squeeze' with assuming (again, for the sake of contradiction) that $y^n > x$. We choose
+    \[h = \frac{y^n - x}{ny^{n-1}} > 0.\]
+    Since $y^n - x < ny^n$, $h < y$. Then we can show that
+    \[y^n - (y-h)^n < hny^{n-1} = y^n - x\]
+    so $(y-h)^n > x$. This again, contradicts $y$ being a least upper bound since $y-h < y$ and $y-h$ is an upper bound.
+
+    Hence the least upper bound of $E$ is the $n$-th root of $x$ exactly by our two contradictions.
+\end{proof}
+
+\subsection{Metric Spaces}
+\emph{We'll do some topology for the next few classes or so.}
+\begin{definition}[Metric Space]
+    A set $X$ and a function $d : X\times X \to \RR$ is a \ul{metric space} if we have the following properties:
+    \begin{description}
+        \item[Nonnegative.] $d(x, y) \geq 0$, furthermore $d(x, y) = 0\iff x = y$.
+        \item[Symmetric.] $d(x, y) = d(y, x)$.
+        \item[Triangle Inequality.] $d(x, y) \leq d(x, z) + d(z, y)$.
+    \end{description}
+    We will call $d$ a \ul{distance}.
+\end{definition}
+\begin{example}
+    $X = \RR^n$ with $d(\vec{a}, \vec{b}) = |\vec{a} - \vec{b}|$ is a metric space.
+\end{example}
+\begin{example}\label{ex:trivial-metric-space}
+    $X$ arbitrary, and
+    \[d(x, y) = \begin{cases}
+            1 & \text{ if }x\neq y \\
+            0 & \text{ if }x = y
+        \end{cases}\]
+    is also a metric space.
+\end{example}
+\begin{example}
+    $X = \left\{ f\mid f \text{ bounded and }f : [0, 1]\to\RR\right\}$ with
+    \[d(f, g) = \sup_{x\in[0, 1]}\left\{ |f(x) - g(x)| \right\}\]
+    is a metric space.
+\end{example}
+
+\subsubsection{Open and Closed Sets}
+The mental image for these are open and closed intervals on the real number line.
+\begin{definition}[Neighborhood]
+    Let $r > 0$. The \ul{neighborhood} of radius centered at $x \in X$ is
+    \[B_r(x) = \left\{ y \in X \mid d(x, y) < r \right\}.\]
+\end{definition}
+\begin{example}
+    In $\RR$, with $d = |x - y|$, we get the open interval
+    \[B_r(x) = \left\{ y\mid x - r < y < x + r \right\}\]
+\end{example}
+\begin{example}
+    In $\RR^n$ with $d(\vec{x}, \vec{y}) = |\vec{x} - \vec{y}|$, we get the open ball
+    \[B_r(\vec{x}) = \left\{ \vec{y} = (y_1, \dots, y_n)\mid (x_1 - y_1)^2 + \cdots + (x_n - y_n)^2 < r^2 \right\}.\]
+\end{example}
+\begin{example}
+    In \cref{ex:trivial-metric-space}, a neighborhood with radius $0.5$ is the point itself, and a neighborhood with radius $2$ is the entire space.
+\end{example}
+
+Let $(X, d)$ be a metric space.
+\begin{definition}[Open Set]
+    A set $Y\subset X$ is \ul{open} if $\forall y\in Y$, $\exists r > 0$\framedfootnote{This $r$ may depend on our $y$.} such that $B_r(y)\subset Y$.
+\end{definition}
+
+\begin{proposition}
+    Any neighborhood is open.
+\end{proposition}
+\begin{proof}
+    Let $x\in X$, $r > 0$. We look at $B_r(x)$.
+
+    $\forall y\in B_r(x)$, we want to find $s$ such that
+    \[B_s(y) \subset B_r(x)\]
+    Let $s = r - d(x, y)$. Let $z\in B_s(y)$. We wish to show that $z\in B_r(x)$, that is, $d(z, x) < r$.
+
+    Invoking the triangle inequality,
+    \[d(z, x) \leq d(z, y) + d(y, x) < s + d(x, y) = r - d(x, y) + d(x, y).\]
+    This gives that every point in $B_s(y)$ is in $B_r(x)$, so $B_s(y)\subset B_r(x)$. Hence, every neighborhood is open.
+\end{proof}
+\begin{example}
+    In $\RR$, the only intervals which are open are open intervals\framedfootnote{This looks...tautological.}.
+\end{example}
+\begin{example}
+    In $\RR^2$, the set
+    \[\{(x, y)\mid y > 0\}\cup \{(x, y)\mid y < -1\}\]
+    is open.
+\end{example}
+\begin{remark}
+    Not being open \textbf{does not} imply a set is closed.
+\end{remark}
+\begin{proposition}
+    Let $\cC$ be a collection of open sets.
+    \begin{enumerate}[(1)]
+        \item $\displaystyle \bigcup_{O\in \cC} O$ is open.
+        \item $\displaystyle \bigcap_{O\in \cC} O$ is open if $\cC$ is finite.
+    \end{enumerate}
+    If $\cC$ is infinite, (2) might fail.
+\end{proposition}
+\begin{example}
+    For example,
+    \[O_n = \left( 1 - \frac{1}{n}, 1 + \frac{1}{n} \right)\]
+    Then
+    \[\bigcap O_n = \{1\}\]
+\end{example}
+\begin{proof}[Proof of (1).]
+    Let $x\in \bigcup_{O\in \cC} O$. Then there exists $O\in \cC$ such that $x\in O$, which we denote $O_x$.
+
+    Then, $\exists r$ such that $B_r(x)\subset O_x \subset \bigcup_{O\in \cC} O$. Hence, $\bigcup_{O\in \cC} O$ is open.
+\end{proof}
+\begin{proof}[Proof of (2).]
+    Let $\cC = \{O_1, O_2, \dots, O_n\}$. Let $x \in \bigcap_{O\in \cC} O$. Then $x\in O_i$ for all $i$. Since each $O_i$ is open, there exists $r_i$ such that $B_{r_i}(x)\subset O_i$.
+
+    Let $r = \min_i r_i$. Since the $\cC$ is finite, the minimum is strictly positive. Then $B_r(x)\subset B_{r_i}(x), \forall i$, so $B_r(x)\subset O_i, \forall i$. Therefore, $B_r(x)\in \bigcap_{O\in \cC} O$.
+\end{proof}
+
+\begin{definition}[Interior Point]
+    An \ul{interior point} of $Y\subset X$ is a point $y\in Y$ such that $\exists r > 0$ such that $B_r(y)\subset Y$.
+
+    We define
+    \[\mathring Y  := \text{the set of interior points of }Y\]
+
+    $Y\text{ open}\iff Y = \mathring Y$.
+\end{definition}
+\begin{example}
+    $\mathring {[0, 1]} = (0, 1)$.
+
+    $\mathring \QQ = \emptyset$.
+\end{example}
+
+\begin{definition}[Closed Set]
+    A set $Y$ is \ul{closed} if $X\setminus Y$\framedfootnote{Sometimes, $Y^c$ is used to denote $X\setminus Y$, the complement of $Y$ in $X$.} is open.
+\end{definition}
+\begin{remark}
+    A set can be open \emph{and} closed, or neither.
+
+    For example, $\empty$ and $X$ are both open and closed.
+\end{remark}
+
+\begin{proposition}
+    Let $\cC$ be a collection of closed sets. Then
+    \begin{enumerate}[(1)]
+        \item $\displaystyle \bigcap_{C\in \cC} C$ is closed.
+        \item $\displaystyle \bigcup_{C\in \cC} C$ is closed if $\cC$ is finite.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Let $C = X - O$ for some open set $O$.
+    \[\bigcup_{c\in\cC}(X - O) = X = \bigcap_{O\in \cC}O\]
+    Combined with the equivalent proposition for open sets completes this proof.
+\end{proof}
+
+\subsubsection{Limit Points}
+\begin{definition}[Limit Point]
+    Let $Y\subset X$. A point $x\in X$ is a \ul{limit point} of $Y$ if $\forall r > 0$, $\exists y\in Y$ such that $y\neq x$ and $y \in B_r(x)$. We denote
+    \[Y' = \{y\mid y\text{ is a limit points of Y}\}.\]
+\end{definition}
