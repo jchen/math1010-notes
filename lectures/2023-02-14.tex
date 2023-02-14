@@ -1,0 +1,119 @@
+%!TEX root = ../notes.tex
+\section{February 14, 2023}
+The first quiz will definitely be after we get homework 2 back. Definitions on the quiz will come from lecture and the reading. Midterm will be around Spring break.
+
+\subsection{Metric Spaces, \emph{continued}}
+\subsubsection{Limit Points}
+Recall that we left off at limit points last lecture.
+\begin{example}
+    The following are examples of sets and limit points:
+    \begin{enumerate}
+        \item $0$ is a limit point of the set
+              \[\left\{ 0, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \dots \right\}.\]
+        \item $\{1, 2, 3\}\subset \RR$ has no limit points.
+        \item In $\RR^2$,
+              \begin{align*}
+                  S  & = B_1(0)\cup \left\{ (x, 0)\mid x\in\RR \right\}\cup \{(10, 10)\}
+                  \intertext{has limit points}
+                  S' & = \underbrace{\{(x, y)\mid x^2 + y^2 \leq 1\}}_{\text{closed ball}}\cup \left\{ (x, 0)\mid x\in\RR \right\}.
+              \end{align*}
+              We note that nothing can approach $(10, 10)$ thus this is not a limit point. The open ball gives rise to the closed ball, and we also have the axis as well.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    $x\in X$ is a limit point of $Y$ iff $\forall r>0$, $\exists$ infinitely many points of $Y$ in $B_r(x)$.
+\end{proposition}
+\begin{proof}
+    ~\begin{description}
+        \item[$\Longleftarrow$:] This falls from the definition. In fact, this is a stronger statement than the definition.
+
+            Since $\forall r > 0$ there exists infinitely many points in $B_r(x)$, then there exists $y\neq x$ in $B_r(x)$.
+        \item[$\Longrightarrow$:] Suppose otherwise, that there exists some $r > 0$ such that there doesn't exist infinitely many points of $Y$ in $B_r(x)$ (say there are finitely many points of $Y$ in $B_r(x)$). Let us call these points $y_1, \dots, y_n$. Let $r_0 = \min_{y_i\neq x}\{d(y_i, x)\} > 0$ (we're done if this set is empty).
+
+            Then $B_{r_0}(x)\cap Y = \{x\}$, and $x$ is not a limit point of $y$, which is a contradiction.
+    \end{description}
+    Which concludes the bidirectional.
+\end{proof}
+
+\subsubsection{Closedness}
+
+\begin{theorem}\label{thm:limit-points-in-closed}
+    $Y$ is closed if and only if $Y' \subset Y$.
+\end{theorem}
+\begin{proof}
+    ~\begin{description}
+        \item[$\Longrightarrow$:] Suppose $Y$ is closed. Let $y \in Y'$, we wish to show that $y\in Y$. We argue by contradiction, suppose $y\not\in Y$, then $y\in X\setminus Y$ which is open. So, $\exists r > 0$ such that $B_r(y)\subset X\setminus Y$. Then, $B_r(y)\cap Y = \emptyset$ (since it is in $X\setminus Y$). This is a contradiction with $y\in Y'$.
+        \item[$\Longleftarrow$:] Suppose $Y'\subset Y$. We want to show that $X \setminus Y$ is open.
+
+            Let $z\in X\setminus Y$. Since $z\not\in Y$, $z\not\in Y'$ since $Y'\subset Y$. Then, $\exists r > 0$ such that $B_r(z)\cap Y$ has no points $p\neq z$ such that $p\in Y$. Then $B_r(z)\subset X\setminus Y$ implies $X\setminus Y$ is open.
+    \end{description}
+    Which is as desired.
+\end{proof}
+
+\begin{definition}[Closure]
+    The \ul{closure} of $Y$ is $\overline{Y} = Y\cup Y'$.
+\end{definition}
+
+\begin{theorem}
+    Let $\cC$ be a collection of sets $C\subset X$ such that $C$ is closed and $Y\subset C$. Then
+    \[\overline{Y} = \bigcap_{C\in\cC}C.\]
+    That is, $\overline{Y}$ is the smallest closed superset of $Y$.
+\end{theorem}
+\begin{proof}
+    ~\begin{description}
+        \item[Case $\subset$:] Let $y\in Y$ or $y\in Y'$, we want to show that $y\in \bigcap_{C\in\cC}C$. That is to say, it is in every superset of $Y$.
+
+            If $y\in Y$, then $y\in Y\subset C$ by the definition of $C$.
+
+            If $y\in Y'$, we pick arbitrary $C$. Since $y$ is a limit point of $Y$, $y$ is also a limit point of $C$. Since $C$ is closed, $y\in C$ by \cref{thm:limit-points-in-closed}. Since our choice of $C$ was arbitrary, it holds true for all $C$.
+
+        \item[Case $\supset$:] We will show that $\overline{Y}\in \cC$. Since $\overline{Y}\supset Y$, we only need to show that $\overline{Y}$ is closed.
+
+            If $x\not\in \overline{Y}$, then $x\not\in Y$ and $x\not\in Y'$. So $\exists r > 0$ such that $B_r(x)\cap Y = \emptyset$.
+
+            Since $B_r(x)$ is open, each point has a neighborhood centered in $B_r(x)$, this means that the neighborhood doesn't intersect $Y$\footnote{Assume otherwise, then $z\in B_r(x)$ and $z\in Y'$, but we can squeeze a ball $B_{r'}(z)\subset B_r(x)$ which is disjoint from $Y'$.}. For each point in $B_r(x)$, that point is \emph{neither} in $Y$ nor a limit point of $Y$.
+
+            Then, $B_r(x)\subset X\setminus \overline{Y}$, so $X\setminus \overline{Y}$ is open, then $\overline{Y}$ is closed.
+    \end{description}
+    Which is as desired.
+\end{proof}
+
+\begin{corollary}
+    $Y = \overline{Y}$ if and only if $Y$ is closed.
+\end{corollary}
+\begin{proof}
+    ~\begin{description}
+        \item[$\Longrightarrow$:] Falls from the proof just now.
+        \item[$\Longleftarrow$:] $Y$ is closed so $Y'\subset Y$ so $\overline{Y} = Y\cup Y' = Y$.
+    \end{description}
+    as desired.
+\end{proof}
+
+\subsubsection{Compactness}
+\begin{definition}[Compactness]
+    A subset $K$ of a metric space $(X, d)$ is \ul{compact} if for every collection $\cC$ of open sets such that $K\subset \bigcup_{C\in \cC}C$, one can extract a finite collection $C_1, C_2, \dots, C_n$ such that $K\subset \bigcup_{i=1}^n C_i$.
+
+    $\cC$ is referred to as an \ul{open cover} of $K$, and $C_1, \dots, C_n$ is referred to as a \ul{finite subcover} of $K$.
+\end{definition}
+
+\begin{definition}[Boundedness]
+    A set $E\subset X$ is \ul{bounded} if $\exists x\in X, R > 0$ such that $E\subset B_R(x)$.
+\end{definition}
+\begin{theorem}
+    Any compact set $K\subset X$ is bounded.
+\end{theorem}
+\begin{proof}
+    Fix arbitrary $x$. Take collection $\cC = \left\{ B_R(x) \mid R = 1, 2, \dots \right\}$.
+
+    We show first that $\cC$ is an open cover. $\cC$ being open is clear, since each set is open. We show it is a cover. For any $y\in K$, $y\in B_R(x)$ for every $R > d(x, y)$. So $\cC$ is an open cover.
+
+    Since $\cC$ is compact, then there exists a finite subcover $B_{R_1}(x), B_{R_2}(x), \dots, B_{R_n}(x)$. Take $R = \max\{R_1, \dots, R_n\}$ which is finite. Then $K\subset \bigcap_{i=1}^n B_{R_i}(x) = B_R(x)$ (we can line up the open balls in order of radius, and have a chain of subset inclusions).
+
+    Then, $K$ is bounded.
+\end{proof}
+
+We'll state this theorem today without proof.
+\begin{theorem}
+    Any compact set $K\subset X$ is closed.
+\end{theorem}
