@@ -1,0 +1,112 @@
+%!TEX root = ../notes.tex
+\section{February 16, 2023}
+\subsection{Heine-Borel Theorem}
+Today, we'll work toward proving the Heine-Borel theorem. Informally,
+\begin{theorem*}[Heine-Borel Theorem]
+    A subset of $\RR^n$ is compact $\iff$ it is bounded and closed.
+\end{theorem*}
+
+The forward direction holds true in all metric spaces, the backward direction only applies to $\RR^n$.
+
+We stated last time in \cref{thm:compact-implies-bounded} and \cref{thm:compact-implies-closed} that compact implies bounded and closed.
+
+We'll first show that (0) any compact set is closed. Then, our strategy for the reverse direction will be to prove that bounded and closed sets are compact. We'll prove the following:
+\begin{enumerate}[(1)]
+    \item If a set $A$ is compact, any closed subset $B\subset A$ is compact too.
+    \item In $\RR^n$, an $n$-cell $\displaystyle I = \prod_{i=1}^n[a_i, b_i]$ is compact (intervals).
+    \item We can enclose any set $K$ in $\RR^n$ with some compact $n$-cell $I$ such that $K\subset I$.
+\end{enumerate}
+
+\begin{theorem*}[\Cref{thm:compact-implies-closed}]
+    Any compact $K\subset X$ is closed.
+\end{theorem*}
+\begin{proof}
+    The idea is to show that $K^C = X\setminus K$ is open.
+
+    Let $x\in K^C$, suffices to find a radius $r > 0$ such that $B_r(x)\subset K^c$.
+
+    Construct\footnote{This should be a familiar construction we'll revisit, can we find a cover that has a finite subcover?} an open cover of $K$. For each $y\in K$, we define $B_y = B\left(y, \frac{d(x, y)}{2}\right)$. $\cC = \left\{ B_y\mid y\in K \right\}$ is a cover of $K$.
+
+    $\cC$ is an open cover of $K$ since each $y\in B_y\in \cC$. Since $K$ is compact, we can extract a finite subcover
+    \[\left\{ B_{y_1}, B_{y_2}, \cdots, B_{y_n} \right\}\]
+    We let $\displaystyle r = \min_{i=1,\dots,n} \left\{ \frac{d(x, y_i)}{2} \right\}$. Remains to show that $B_r(x)\in K^c$.
+
+    We fix point $z\in B_r(x)$, so $|z - x| < r$ and $d(z, x) < r$. By the triangle inequality,
+    \begin{align*}
+        d(y_i, x) & \leq d(z, y_i) + d(z, x) \\
+                  & < d(z, y_i) + r.
+    \end{align*}
+    Observe that $r \leq \frac{d(x, y_i)}{2} = d(x, y_i) - \frac{d(x, y_i)}{2}$ by our definition of $r$, which then implies
+    \[\frac{d(y_i, x)}{2} \leq d(y_i, x) - r < d(z, y_i)\implies \frac{d(x, y_i)}{2}< d(z, y_i),\quad\forall i = 1, \dots, n.\]
+    which means that $z\in B_{y_i}$. In particular, $z\not\in K\Rightarrow B_r(x) \subset K^C$. Which exactly means that $K^C$ is open and $K$ is closed.
+\end{proof}
+Summarizing this proof, we're keeping track of balls and their radiuses. This gives us (0).
+
+We'll continue to proving statements (1) through (3).
+
+\begin{theorem}[Important Statement 1]
+    Let $K\subset X$ be a compact set and let $L\subset K$ be closed. Then $L$ is compact.
+\end{theorem}
+\begin{proof}
+    Let $\cC$ be an open cover of $L$. Then, let $D = \cC \cup \{L^C\}$ be open. $D$ is another open cover of $K$. Since $K$ is compact, let $\left\{ D_1, \dots, D_n \right\}$ be a finite subcover of $K$. If all $D_i$ are in $C$, we are done, this is a finite subcover of $L$, we are done.
+
+    If not, suppose $D_n = L^C$ (with reordering). Consider $\left\{ D_1, D_2, \dots, D_{n-1} \right\}$. We claim that this is a finite subcover of $L$.
+
+    If $x\in L$, $\exists i = 1, \dots, n$ such that $x\in D_i$, $i\neq n$ (otherwise we're in the previous statement). Which is as desired, and $L$ is compact.
+\end{proof}
+\begin{corollary}
+    For $K$ compact and $F$ closed, $F\cap K$ is compact.
+\end{corollary}
+
+We discussed earlier that the forward implication comes with all metric spaces but the backward implication does not.
+\begin{example}
+    Consider a space
+    \[X = \left\{ \frac{1}{n}, n\geq 1 \right\}, d(x, y) = \begin{cases}
+            0 & \text{if }x = y  \\
+            1 & \text{otherwise}
+        \end{cases}\]
+    This is bounded and closed, but not compact.
+\end{example}
+
+\begin{theorem}[Heine-Borel Theorem]
+    A set $K\subset \RR^n$ is compact if and only if it is bounded and closed.
+\end{theorem}
+\begin{definition}[$n$-cell]
+    An $n$-cell is a subset of $\RR^n$ of the form
+    \[[a_1, b_1]\times \cdots \times [a_n, b_n], \qquad a_i \leq b_i\ \forall i\]
+    where $[a_i, b_i]$ denotes the closed interval $\left\{ x\mid a_i\leq x\leq b_i \right\}$.
+\end{definition}
+
+\begin{lemma}\label{lemma:hb-chain-lemma}
+    Suppose we have a collection of nested $n$-cells $C_1, C_2, \dots$. That is, if
+    \[C_i = \prod^n_{k=1}[a_k^i, b_k^i]\implies [a^i_k, b^i_k]\supset [a^{i+1}_k, b^{i+1}_k].\]
+    and
+    \[C_1 \supset C_2\supset C_3, \dots\]
+    Since these are nested, the claim is that $\bigcap^\infty_{i = 1}C_i$ is then non-empty.
+\end{lemma}
+\begin{proof}
+    We do it for $n = 1$, so we can just use scalars. Take $C_i = [a^i, b^i]$\footnote{Here the $i$s are still indices, not exponents. Recall we needed 2 indices last time}. Let $A = \left\{ a^1, a^2, \dots \right\}$. Take $a = \sup A$. We claim that $a\in \bigcap^\infty_{i=1}C_i$.
+
+    Note that $a^i\leq b^j$ by our nested property, so we have a chain of inequalities $a^i \leq a^j \leq b^j$ if $i\leq j$. Then also $a^i \leq b^i\leq b^j$ for $i\leq j$.
+
+    By change of inequalities, $b^j$ is an upper bound of $A$. Since $a$ is $\sup A$, then $a\leq b^j$ for all $j$. Then $a^i \leq a\leq b^i$ so $a\in C_i$ for every $i$. Then $a$ is in the intersection.
+
+    Extend for dimension $n$ greater than $1$, consider vectors and take coordinate-wise supremum $a_1, a_2, \dots, a_n$, such that
+    \[a^i_k \leq a_k \leq b^i_k\]
+    for all $i, k$ not dissimilar to above.
+\end{proof}
+
+\begin{lemma}[Important Statement 2]
+    Every $n$-cell is compact.
+\end{lemma}
+\begin{proof}
+    Let $I$ be a $k$-cell, $I = \prod_{j=1}^k[a_j, b_j]$. Let
+    \[\delta = \left( \sum_{j=1}^k (b_j - a_j)^2 \right)^{1/2}\]
+    If $x, y\in I$, $|x - y| < \delta$. $\delta$ can be thought of as the diagonal of the cell. Suppose for the sake of contradiction we have an open cover $\{G_\alpha\}$ \emph{without} a finite subcover of $I$. Let $c_j = \frac{a_j + b_j}{2}$, so for each dimension we have $k$-cell $[a_j, c_j]$ and $[c_j, b_j]$. Altogether, we have $2^k$ $k$-cells.
+
+    One of these cells is not covered by a finite subcover. Let's call that cell $I_1$. We split again and get an subset of $I_1$, $I_2$. We then have construction
+    \[I_1\supset I_2\supset I_3\supset \cdots\]
+    For all $k$, $I_k$ is not covered by a finite subcover of $\{G_\alpha\}$. Additionally, $\forall x, y\in I_k$, $|x - y| < 2^{-k}\delta$ (we split $k$ times).
+
+    By lemma \cref{lemma:hb-chain-lemma}, $\bigcap^\infty_{j=1}I_j$ is nonempty. Let $x^*\in \bigcap^\infty_{j=1}I_j$, and $\alpha$ such that $x^* \in G_\alpha$. Since $G_\alpha$ is open, $\exists r$ such that if $|y - x^*| < r$, $r\in G_\alpha$ (there is a ball in $G_\alpha$). Taking $k$ large enough (go down the chain) such that $2^{-k}\delta < r$, then $I_k\subset G_\alpha$ which is a contradiction.
+\end{proof}
