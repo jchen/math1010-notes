@@ -1,0 +1,87 @@
+%!TEX root = ../notes.tex
+\section{March 14, 2023}
+\emph{By default, the quiz will be next Tuesday.}
+
+\subsection{Continuity, \emph{continued}}
+
+\begin{theorem}\label{thm:continuous-function-open-sets}
+    $f : X\to Y$ is continuous if and only if $\forall O\subset Y$ open, the preimage $f^{-1}(O) = \{x \in X\mid f(x)\in O\}$ is open.
+\end{theorem}
+\begin{proof}
+    We proved the right implication last time. We'll work on the left implication.
+
+    Suppose $\forall O\in Y, f^{-1}(O)$. Let $x_0 \in X, \epsilon > 0$. Then $B_\epsilon(f(x_0))$ is open in $Y$.
+
+    Then $f^{-1}(B_\epsilon(f(x_0)))$ is open in $X$. Since $x_0 \in f^{-1}(B_\epsilon(f(x_0)))$, $\exists \delta > 0$ such that $B_{\delta}(x_0)\subset f^{-1}(B_\epsilon(f(x_0)))$.
+
+    This implies that if $d(x, x_0) < \delta$, then $x\in f^{-1}(B_\epsilon(f(x_0)))$, then $d_Y(f(x), f(x_0)) < \epsilon$. Then $f$ is continuous at $x_0$.
+\end{proof}
+
+\begin{corollary}\label{thm:continuous-function-closed-sets}
+    $f: X\to Y$ is continuous in $X$ if and only if for all $C\subset Y$ closed, $f^{-1}(C)$ is closed.
+\end{corollary}
+\begin{proof}
+    If $C$ is closed, $C^{C}$ is open, then $f^{-1}(C^{C})$ is open, then $f^{-1}(C^{C})^{C}$ is closed.
+
+    We claim $f^{-1}(C) = f^{-1}(C^C)^C$. If $x\in f^{-1}(C)$ iff $f(x)\in C$ iff $x\not\in f^{-1}(C^C)$ iff $x\in f^{-1}(C^C)^C$.
+
+    This gives a biconditional between the second condition in \cref{thm:continuous-function-open-sets} and \cref{thm:continuous-function-closed-sets}.
+\end{proof}
+
+\begin{proposition}
+    Let $X$ be a metric space. Let $f,g : X\to \RR$ be continuous at $x_0$. If $\alpha\in \RR$, the following are continuous at $x_0$:
+    \begin{enumerate}[(1)]
+        \item $f+g$, $fg$, $\alpha f$.
+        \item $f/g$ as long as $g(x_0)\neq 0$.
+    \end{enumerate}
+\end{proposition}
+We'll state this without proof.
+
+\begin{theorem}
+    Let $X, Y, Z$ be metric spaces. Let $f : X\to Y$ and $g : Y\to Z$ with $f$ continuous at $x_0$ and $g$ continuous at $f(x_0)$. Then $g\circ f$ is continuous at $x_0$.
+\end{theorem}
+\begin{proof}
+    Let $\epsilon > 0$. Since $g$ is continuous, $\exists \delta' > 0$ such that if indeed $d_Y(y, d(x_0)) < \delta'$, then $d_Z(g(y), (g\circ f)(x_0)) < \epsilon$.
+
+    Then by continuity of $f$, $\exists \delta > 0$ such that if $d_X(x, x_0) < \delta$, then $d_Y(f(x), f(x_0)) < \delta'$ then $d_Z((g\circ f)(x), (g\circ f)(x_0)) < \epsilon$. Therefore $g\circ f$ is continuous.
+\end{proof}
+
+\begin{theorem}
+    If $f: X\to Y$ is continuous, $E\subset X$ compact, then $f(E) = \{f(x)\mid x\in E\}$ is compact.
+\end{theorem}
+\begin{proof}
+    Let $\cC$ bean open cover of $f(E)$. Consider $\cC' = \{f^{-1}(O)\mid O\in \cC\}$.
+
+    Every element of $\cC'$ is open becuase $f$ is continous. $\cC'$ covers $E$ since all elements of $f(E)$ are covered by $\cC$. So $\cC'$ is an open cover of $E$.
+
+    Then there exists a finite subcover $\{f^{-1}(O_1), \dots, f^{-1}(O_n)\}$ of $E$. We claim that $\{O_1, \dots, O_n\}$ is a finite subcover of $f(E)$. Let $y\in f(E)$ so $y = f(x)$ for some $x\in E$. $\exists O_i$ such that $x\in f^{-1}(O_i)$. Then $y = f(x) \in O_i$.
+
+    So this is a finite subcover of $E$.
+\end{proof}
+
+\begin{corollary}
+    Let $f : X\to Y$ which is continuous, and $E\subset X$ compact, then $f$ is bounded on $E$.
+\end{corollary}
+\begin{proof}
+    We know that $f(E)$ is compact by above, and if a set is compact it is bounded.
+\end{proof}
+
+\begin{corollary}[Extreme Value Theorem]
+    Let $f : X\to \RR$ be continuous, and some $E\subset X$ compact.
+
+    Then $f$ attains a maximum on $E$. That is, $\exists x_0\in E$ such that $f(x_0)\geq f(x)$ $\forall x\in E$. This statement also applies to the minimum.
+\end{corollary}
+
+\begin{proof}
+    $f(E)$ is closed and bounded, so $f$ contains its supremum, say $y = \sup(f(E))$. Since $y\in f(E)$, $\exists x$ such that $f(x) = y$. That is such an $x_0$.
+\end{proof}
+
+\begin{definition}[Uniform Continuity]
+    We say that $f : X\to Y$ is \ul{uniformly continuous} if given $\epsilon > 0$, $\exists \delta > 0$ such that if $x, y$ satisfy
+    \[d_X(x, y) < \delta \Rightarrow d_Y(f(x), f(y)) < \epsilon.\]
+    We note that $\delta$ does not depend on $x, y$ (normal continuity has $\delta$ depend on $x, y$).
+\end{definition}
+
+\begin{theorem}
+    If $f : X\to Y$ continuous, and $X$ is compact, then $f$ is uniformly contunuous.
+\end{theorem}

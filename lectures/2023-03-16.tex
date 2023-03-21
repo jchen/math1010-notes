@@ -1,0 +1,92 @@
+%!TEX root = ../notes.tex
+\section{March 16, 2023}
+
+Midterm will be the Thursday after Spring Break, quiz next Tuesday. Homework will be posted today, hopefully\footnote{Or the graders will, verbatim, `be strangled'.}
+
+\subsection{Uniform Continuity}
+
+\begin{theorem}
+    If $f : X\to Y$ is continuous, and $X$ is compact, then $f$ is uniformly continuous.
+\end{theorem}
+
+The intuition is that we'll use the compactness of $X$ to take some open subcover, taking the minimum of the finite subcover.
+
+\begin{proof}
+    Let $\epsilon > 0$. For each $x\in X$, by continuity, $\exists \delta_x>0$ such that if $d_X(x, x') < \delta_x$, then $d_Y(f(x), f(y)) < \frac{\epsilon}{2}$.
+
+    Consider the collection
+    \[\cC = \left\{ B_{\frac{\delta_x}{2}}(x)\mmid x\in X\right\}\]
+    which is an open cover of $X$.
+
+    By compactness, exists a finite subcover
+    \[\left\{ B_{\frac{\delta_{x_1}}{2}}(x_1), \dots, B_{\frac{\delta_{x_n}}{2}}(x_n) \right\}\]
+    Let $\delta = \min \left\{\frac{\delta_{x_1}}{2}, \dots, \frac{\delta_{x_n}}{2}\right\}$. We claim that if $d_X(x, y) < \delta$, then $\delta_Y(f(x), f(y)) < \epsilon$.
+
+    For each $x$, $\exists i$ such that $d_X(x, x_i) < \frac{\delta_{x_i}}{2}$. Then
+    \begin{align*}
+        d_X(x_i, y) & \leq d_X(x, y) + d_X(x, x_i)                        \\
+                    & < \delta + \frac{\delta_{x_i}}{2} \leq \delta_{x_i}
+    \end{align*}
+    But then
+    \begin{align*}
+        d_Y(f(x), f(y)) & \leq d_Y(f(x),f(x_i)) + d_Y(f(x_i), f(y))            \\
+                        & < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+    \end{align*}
+    which is as desired.
+\end{proof}
+
+\begin{definition}[Connectedness]
+    A metric space $X$ is \ul{disconnected} if $\exists O_1, O_2$, non-empty open sets such that $X = O_1\cup O_2$, and $O_1\cap O_2 = \emptyset$. If $X$ is not disconnected, we say that $X$ is \ul{connected}.
+\end{definition}
+
+\begin{example}
+    A line or line segment is connected.
+
+    Two open intervals who share a limit point is disconnected.
+
+    Two disjoint sets is disconnected.
+
+    The set $\left( x, \sin\left(\frac{1}{x}\right) \right)$ is connected.
+\end{example}
+
+\begin{theorem}
+    Let $X, Y$ be metric spaces, and $f : X\to Y$ continuous. If $X$ is connected, then $f(X)$ is connected.
+\end{theorem}
+\begin{proof}
+    By contraposition. Assume $\exists O_1, O_2$ disconnected such that $f(X) = O_1\cup O_2$ and $O_1\cap O_2 = \emptyset$.
+
+    Take $U_1 = f^{-1}(O_1)$ and $U_2 = f^{-1}(O_2)$. $U_1, U_2$ are open by continuity.
+
+    We show that $U_1\cap U_2 = \emptyset$. If $x\in U_1\cap U_2$, then $f(x)\in O_1, f(x)\in O_2$ which is a contradiction.
+
+    $U_1, U_2$ are nonempty since $O_1, O_2$ are nonempty. Then $U_1, U_2$ are disconnected.
+\end{proof}
+
+\begin{theorem}[Intermediate Value Theorem]
+    Let $f : [a, b]\to \RR$ continuous. $\forall L\in \RR$ such that $f(a) < L < f(b)$. Then $\exists c\in (a, b)$ such that $f(c) = L$.\framedfootnote{This follows the normal high school definition of continuity, `you can draw it without lifting your pen'.}
+\end{theorem}
+\begin{proof}
+    Since $[a, b]$ is connected and $f$ is continuous, then $f([a, b])$ is connected.
+
+    Let $O_1 = (-\infty, L)\cap f([a,b])$, $O_2 = (L, \infty)\cap f([a, b])$.
+
+    Which are non-empty, open in $f([a, b])$, and disjoint. Then $O_1\cup O_2 \neq f([a, b])$. So, $L\in f([a, b])$ had better be true.
+\end{proof}
+
+\subsection{Discontinuities}
+\begin{definition}[Discontinuities]
+    The following definitions:
+    \begin{enumerate}[(1)]
+        \item $x_0$ is a \ul{removable discontinuity} if $f$ if $\lim_{x\to x_n}f(x)$ exists but is different from $f(x_0)$.
+        \item $x_0$ is a \ul{simple discontinuity} if $\lim_{x\to x_0^{-}}f(x)$, $\lim_{x\to x_0^+}f(x)$ exist but disagree.
+        \item $x_0$ may be a discontinuity of a different type.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    Take
+    \[f(x) = \begin{cases}
+            \sin\left( \frac{1}{x} \right) & \text{if }x\neq 0 \\
+            0                              & \text{otherwise}
+        \end{cases}\]
+\end{example}

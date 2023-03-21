@@ -1,0 +1,101 @@
+%!TEX root = ../notes.tex
+\section{February 28, 2023}
+\subsection{Sequences, Cauchy Sequences, and Completeness}
+\begin{definition}
+    Let $(x_n)$ be a sequence in a metric space $X$. Given a monotomically increasing sequence $(n_k)$, the sequence $(x_{n_k})$ is called a subsequence of $(x_n)$. If $x_{n_k}\to y$, as $k\to \infty$ we call $y$ a subsequential limit of $(x_n)$.
+\end{definition}
+\begin{theorem}
+    Let $(x_n)$ be a sequence in a compact metric space $X$. Then some subsequence of $X_n$ converges to a point $x\in X$.
+\end{theorem}
+The point of this theorem is to use the compactness of this metric space.
+\begin{proof}
+    If $\{x_n\mid n\in\NN\}$ is finite, then we are done. One of the values repeats infinitely often. $\exists x\in \{x_n \mid n\in\NN\}$ and $n_1 < n_2 < \dots$ such that $x_{n_k}= x\forall k$. Then $x_{n_k}\to x$, and $x\in X$.
+
+    We'll use the following lemma:
+    \begin{lemma}
+        If $E$ is an infinite subset of a compact set $K$, then $E$ has a limit point in $K$.
+    \end{lemma}
+    \begin{proof}[Proof of lemma]
+        By contradiction. Suppose not, that no point of $K$ is a limit point of $E$. Then $\forall q\in K$, $\exists q\in V_q$ such that $V_q$ contains at most $1$ point of $E$. Since no finite subcollection of $\{V_k\}$ can cover $K$ and $E\subset K$, this contradicts the compactness.
+    \end{proof}
+
+    Because of the lemma, let $x$ be a limit point of
+    \[\{x_n\mid n\in \NN\}\]
+    Choose $n_1$ such that $d(x, x_{n_1}) < 1$, similarly $x_{n_1} < x_{n_2} < x_{n_3} < \dots < x_{n_k} < \dots$ such that $d(x, x_{n_k}) < \frac{1}{k}$. (We can do that since there are infinitely many points that satisfy this for each $k$).
+\end{proof}
+
+\begin{corollary}[Bolzano-Weierstrass]
+    Each bounded sequence in $\RR^n$ has a convergent subsequence.
+\end{corollary}
+\begin{proof}
+    If $(x_n)$ is bounded, there exists a compact cell such that $\{x_n \mid n\in \NN\}$ contained in it. By the previous theorem, it has a convergent subsequence.
+\end{proof}
+\begin{example}
+    Consider the sequence
+    \[(1, 1.4, 1.41, 1.414, 1.4142, \dots)\in \QQ\]
+    and let's pick $d(x, y) = |x - y|$. In this space, the sequence converges but its limit $\not\in \QQ$.
+
+    \emph{What can we say in these cases?}
+\end{example}
+\begin{definition}
+    Let $(x_n)$ be a sequence in a metric space $X$. We say that $(x_n)$ is \ul{Cauchy} if $\forall \epsilon > 0$, $\exists N\in \NN$ such that if $m, n\geq N$, then $d(x_m, x_n) < \epsilon$.
+\end{definition}
+\begin{remark}
+    If a sequence is convergent, then it is Cauchy.
+\end{remark}
+\begin{proof}
+    Let $N$ be aush that if $n\geq N$, then $d(x, x_n) < \frac{\epsilon}{2}$.
+
+    Then $\forall m, n\geq N$, $d(x_n, x_m)\leq d(x_n, x) + d(x, x_m) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$
+\end{proof}
+
+\begin{theorem}
+    If $X$ is a compact metric space, all Cauchy sequences in $X$ converge.
+\end{theorem}
+\begin{proof}
+    Let $X$ be compact and $(x_n)$ a Cauchy sequence. By the theorem before, $(x_n)$ has a convergent subsequence $(x_{n_k})$, $x_{n_k}\to X$. We wish to now show that $x_n\to x$.
+
+    Let $\epsilon > 0$, let $N$ be such that $m, n\geq N$ then $d(x_m, x_n) < \frac{e}{2}$. This is by $(x_i)$ being Cauchy. We choose $K$ such that if $k \geq K$, then $d(x_{n_k}m, x)< \frac{\epsilon}{2}$. This is by subsequences converging. We pick $N' = \max\{N, n_k\}$.
+
+    Then, $\forall n\geq N'$, $d(x_n, x)\leq d(x_n, x_{n_k})+ d(x_{n_k}, x) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$.
+\end{proof}
+\begin{definition}
+    A metric space $X$ where all Cauchy sequences converge is said to be \ul{complete}.
+
+    The previous theorem gives that all compact metric spaces are complete.
+\end{definition}
+
+\begin{theorem}
+    $\RR^k$ is complete.
+\end{theorem}
+\begin{proof}
+    Let $(x_n)$ be a Cauchy sequence. We first show that it is bounded. Let $N$ be such that if $m, n\geq N$, $d(x_m, x_n) < 1 \Rightarrow d(x_n, x_N) < 1$, $\forall n \geq N$.
+
+    Let $R = \max\{1, d(x_1, x_N), d(x_1, x_N), \dots, d(x_{N-1}, x_N)\}$. Then $d(x_j, x_N)\leq R$ $\forall j$ implies that $(x_n)$ is bounded.
+
+    Since $(x_n)$ is bounded, $\exists \text{cell }C$ such that $x_n\in C$ $\forall n$. We now regard $(x_n)$ as being in $C$ (which is compact).
+
+    Since compact spaces are complete, $(x_n)$ converges.
+
+    \todo{something written on board?}
+\end{proof}
+
+\subsection{Series}
+\begin{definition}
+    Let $(x_n)$ be a real number sequence. For each $n\in \NN$, we define a \ul{partial sum}
+    \[s_n = x_1 + x_2 + \cdots + x_n = \sum^n_{j=1}x_j.\]
+    We say that the series $\left(\sum x_j\right)$ converges if $(s_n)$ converges.
+\end{definition}
+
+\begin{remark}
+    If $\displaystyle\sum^\infty_{i=1} x_n$ converges, then $\displaystyle\sum^\infty_{i=N}x_n$ converges, and vice versa.
+\end{remark}
+\begin{theorem}
+    If $\sum x_n$ converges, then $x_n\to 0$.
+\end{theorem}
+\begin{proof}
+    Let $\epsilon > 0$ and that $s_n\to x$. Then, $\exists N$ such that if $n\geq N + 1$, $|s_n - s| < \frac{\epsilon}{2}, |s_{n-1}-s| < \frac{\epsilon}{2}$. Then
+    \[|s_n - s_{n-1}| < |s_n-s| + |s-s_{n-1}| < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\]
+    but
+    \[|x_n| = |s_n - s_{n-1}| < \epsilon.\]
+\end{proof}

@@ -415,6 +415,7 @@
 
 \newcommand{\bvec}[1]{\vec{\mathbf{#1}}}
 \DeclareMathOperator{\Id}{\mathrm{id}}
+\DeclareMathOperator{\sgn}{\mathrm{sgn}}
 
 \newcommand{\cA}{\mathcal A}
 \newcommand{\cB}{\mathcal B}
@@ -425,3 +426,5 @@
 \newcommand{\cG}{\mathcal G}
 
 \newcommand{\intentionalpagebreak}{\begin{center}\emph{(continued on next page, intentially blank)}\end{center}\pagebreak}
+
+\newcommand{\mmid}{\ \middle|\ }

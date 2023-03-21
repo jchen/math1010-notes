@@ -1,0 +1,106 @@
+%!TEX root = ../notes.tex
+\section{March 21, 2023}
+
+\subsection{Differentiation}
+From now on, we fix $f : \RR \to \RR$, or from an interval to another interval. We'll mostly be dealing with real-valued functions.
+
+\begin{definition}
+    Let $f: (a, b)\to \RR$. We say $f$ is \ul{differentiable} at $x_0\in(a, b)$ if
+    \[\lim_{x\to x_0} \frac{f(x) - f(x_0)}{x - x_0}\]
+    exists. In that case, we write $f'(x_0)$ for this limit.
+\end{definition}
+
+\begin{proposition}
+    Let $f: (a, b)\to \RR$ be differentiable at $x_0$. Then $f$ is continuous at $x_0$.
+\end{proposition}
+\begin{proof}
+    \begin{align*}
+        \lim_{x\to x_0}f(x)
+         & = f(x_0) + \lim_{x\to x_0} + \lim_{x\to x_0}\left( f(x) - f(x_0) \right)(x-x_0)       \\
+         & = f(x_0) + \lim_{x\to x_0}\frac{f(x) - f(x_0)}{x - x_0}\cdot \lim_{x\to x_0}(x - x_0) \\
+         & = f(x_0) + f'(x_0)\cdot 0 = f(x_0)
+    \end{align*}
+    implies $\lim_{x\to x_0}f(x) = f(x_0)$ implies $f$ is continuous at $x_0$.
+\end{proof}
+\begin{remark}
+    The converse of this statement is \ul{not} true. Continuous does not imply differentiable!
+\end{remark}
+
+\begin{example}
+    $f(x) = |x|$ is continuous at at $0$ but not differentiable.
+
+    Let's focus at $x = 0$.
+    \begin{align*}
+        \lim_{x\to 0}\frac{|x| - |0|}{x - 0}
+         & = \lim_{x\to 0}\sgn(x)
+    \end{align*}
+    which doesn't exist.
+\end{example}
+
+\begin{proposition}
+    Let $f, g: (a, b)\to \RR$ be differentiable functions at $x$. Then the following are differentiable and satisfy:
+    \begin{enumerate}[(1)]
+        \item Sum rule: $(f + g)'(x) = f'(x) + g'(x)$.
+        \item Product rule: $(fg)'(x) = f'(x)g(x) + f(x)g'(x)$.
+        \item Quotient rule: $\left( \frac{f}{g} \right)'(x) = \frac{f'(x)g(x) - g'(x)f(x)}{(g(x))^2}$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}[Chain Rule]
+    Let $f:(a, b)\to (c,d)$ and $g: (c,d)\to\RR$ both be differentiable functions at $x_0, f(x_0)$ respectively. Then $(g\circ f)$ is differentiable at $x_0$ with derivative
+    \[(g\circ f)'(x_0) = g'(f(x_0))f'(x_0).\]
+\end{theorem}
+
+\begin{proof}
+    We do so in cases.
+    \begin{enumerate}[(i)]
+        \item Suppose exists sequence $(x_n)\in(a,b)$ such that $x_n\to x_0$ if $f(x_n) = f(x_0)$ but $x_n\neq x_0$ for infinitely many $n$.
+
+              Then
+              \begin{align*}
+                  f'(x_0)
+                   & = \lim_{x\to x_0}\frac{f(x) - f(x_0)}{x - x_0}                  \\
+                   & = \lim_{n\to\infty} \frac{f(x_n) - f(x_0)}{x_n - x_0} = 0
+                  \intertext{and}
+                  (g\circ f)'
+                   & = \lim_{x\to x_0} \frac{g(f(x)) - g(f(x_0))}{x - x_0}           \\
+                   & = \lim_{n\to\infty} \frac{g(f(x_n)) - g(f(x_0))}{x_n - x_0} = 0
+              \end{align*}
+        \item Every $(x_0)\in (a,b)$ such that $x_n\to x_0$, $x_n \neq x_0$ has $f(x_n) = f(x_0)$ finitely many times.
+
+              By continuity, $f(x_n)\to f(x_0)$. Then,
+              \begin{align*}
+                  (g\circ f)'(x_0)
+                   & = \lim_{x\to x_0}\frac{g(f(x)) - g(f(x_0))}{x - x_0}                                                                                                   \\
+                   & = \lim_{n\to\infty}\frac{g(f(x_n)) - g(f(x_0))}{x_n - x_0}                                                                                             \\
+                   & = \lim_{n\to\infty}\left( \frac{g(f(x_n)) - g(f(x_0))}{f(x_n) - f(x_0)} \right)\left( \frac{f(x_n) - f(x_0)}{x_n - x_0} \right)                        \\
+                   & = \lim_{n\to\infty}\left( \frac{g(f(x_n)) - g(f(x_0))}{f(x_n) - f(x_0)} \right)\cdot \lim_{n\to\infty}\left( \frac{f(x_n) - f(x_0)}{x_n - x_0} \right) \\
+                   & = g'(f(x_0))\cdot f'(x_0)
+              \end{align*}
+              which covers all cases.
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    Let
+    \[f(x) = \begin{cases}
+            x^2  & x\geq 0 \\
+            -x^2 & x < 0
+        \end{cases}\]
+    The derivative at $x = 0$ is
+    \begin{align*}
+        \lim_{h\to 0} \frac{f(h) - f(0)}{h - 0} = \lim_{h\to 0}\frac{f(h)}{h}
+    \end{align*}
+    We try to squeeze this limit,
+    \[-h = -\frac{h^2}{h} \leq \frac{f(h)}{h} \leq \frac{h^2}{h} = h\]
+    then
+    \[\lim_{h\to 0} -h \leq \lim_{h\to 0}\frac{f(h)}{h}\leq \lim_{h\to 0}h\]
+    which forces $\lim_{h\to 0}\frac{f(h)}{h} = 0$.
+
+    This gives $f'(x) = 0$, and
+    \[f'(x) = \begin{cases}
+            2x  & x\geq 0 \\
+            -2x & x< 0
+        \end{cases}\]
+    so $f'(x)$ is continuous. We say that $f\in \mathcal{C}^1$ (continuous and differentiable). However, the second derivative of $f$ might not exist at $x = 0$.
+\end{example}

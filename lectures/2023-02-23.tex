@@ -1,0 +1,96 @@
+%!TEX root = ../notes.tex
+\section{February 23, 2023}
+\subsection{Numerical Sequences and Series}
+\begin{definition}[Sequence]
+    Let $(X, d)$ be a metric space. A \ul{sequence} is a function $f:\NN\to X$. We denote $f(1) = x_1, f(2) = x_2, \dots$.
+\end{definition}
+\begin{definition}[Convergence]
+    A sequence $(x_n)$ converges to a point $x\in X$ if $\forall \epsilon > 0$, $\exists N$ such that if $n\geq N$, then $d(x_n, x) < \epsilon$.
+\end{definition}
+\begin{example}
+    Let $x_n = \frac{1}{n}$. Let's prove that $x_n\to 0$. For any $\epsilon > 0$, let $N = \lceil \frac{1}{\epsilon}\rceil + 1$. Then
+    \[|x_n - 0| = \frac{1}{n}\leq \frac{1}{N} < \epsilon.\]
+\end{example}
+\begin{definition}[Increasing/Decreasing]
+    We say that a sequence $(x_n)$ is
+    \begin{enumerate}[(1)]
+        \item \ul{monotone increasing} (or \ul{non-decreasing}) if $x_n < x_{n+1}$ (or $x_n \leq x_{n+1}$) $\forall n$.
+        \item \ul{monotone decreasing} {or \ul{non-increasing}} if $x_n > x_{n+1}$ (or $x_n\geq x_{n+1}$) $\forall n$.
+    \end{enumerate}
+\end{definition}
+\begin{theorem}
+    If $(x_n)$ is monotone and bounded, then it converges.
+\end{theorem}
+\begin{proof}
+    Suppose $(x_n)$ is increasing. Then $X = \left\{ x_n\mid n\in\NN \right\}$ is nonempty and bounded above. Let $x = \sup X$. We claim $x_n\to X$. Let $\epsilon > 0$. $|x - \epsilon|$ is not an upper bound of $X$, then $\exists N$ such that $x_N > x - \epsilon$. Then, if $n\geq \NN$,
+    \[x\geq x_n \geq x_N > x-\epsilon\]
+    which gives us that $|x - x_n| < \epsilon$ and $x_n\to x$.
+\end{proof}
+\begin{theorem}
+    Let $(x_n)$ be a sequence in a metric space $X$.
+    \begin{enumerate}[(1)]
+        \item $x_n\to x\in X$ if and only if every neighborhood of $x$ contains $x_n$ for all but finitely many $n$.
+        \item If $x, y\in X$, $x_n\to x$ and $x_n\to y$ implies $x = y$.
+        \item If $(x_n)$ converges, then $(x_n)$ is bounded.
+        \item If $E\subset X$ and $x$ is a limit point of $E$, then $\exists (x_n)$ in $E$ such that $x_n\to x$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    ~\begin{enumerate}[(1)]
+        \item is a restatement of the definition.
+        \item Suppose $x_n \to x, x_n\to y$. Fix $\epsilon$. Then exists $N_1$ such that if $n\geq N_1$, $d(x_n, x) < \frac{\epsilon}{2}$. Similarly, exists $N_2$ such that if $n\geq N_2$, $d(x_n, y) < \frac{\epsilon}{2}$.
+
+              Let $N = \max\left\{ N_1, N_2 \right\}$ and $n\geq N$. $d(x, y)\leq d(x, x_N) + d(x_N, y) < \frac{\epsilon}{2}+ \frac{\epsilon}{2} = \epsilon$.
+
+              This means that $d(x, y) < \epsilon$, but our choice of $\epsilon > 0$ was arbitrary. Then $d(x, y) = 0\implies x = y$.
+        \item Suppose $x_n\to x$. Let $\epsilon = 1$. Then exists $N$ such that $\forall n\geq N$, $d(x_n,x) < 1$.
+
+              Let $r = \max\left\{ 1, d(x_1, x), \dots, d(x_{N-1}, x) \right\}$. Then $d(x_n, x) < r$ $\forall n$. Then $x_n\in B_r(x)$, $\forall n$.
+        \item We will select $x_n$ in the following way. By definition of a limit point, $B_{Y_n}(x)\cap E \neq \emptyset$ $\forall n$.
+
+              Let $x_n \in (B_{Y_n}(x)\cap E)$. We claim $x_n\to x$. Let $\epsilon > 0$ and set $N = \lceil \frac{1}{\epsilon}\rceil$. Then, if $n\geq N$, $d(x_n, x) < \frac{1}{n} \leq \frac{1}{N}< \epsilon$.
+    \end{enumerate}
+\end{proof}
+
+Here are some properties of sequences: If $(x_n)$ and $(y_n)$ are sequences such that $x_n\to x$ and $y_n\to y$, then:
+\begin{enumerate}[(1)]
+    \item $x_n + y_n \to x + y$.
+    \item $cx_n\to cx$, $\forall x\in \RR$.
+    \item $x_ny_n \to xy$.
+    \item If $y\neq 0, y_n\neq 0$ $\forall n$, then $x_n/y_n\to x/y$.
+\end{enumerate}
+\begin{lemma}
+    Let $(x_n)$ be a sequence such that $x_n \to x$, $x\neq 0$. Then $x_n = 0$ for at most finitely many $n$.
+\end{lemma}
+\begin{proof}
+    Let $\epsilon = |x|$. Then $\exists N$ such that if $n\geq N$, then $|x_n - x| < \epsilon$. But $|x_n| \geq |x| - |x - x_n| > \epsilon - \epsilon = 0$ gives $x_n\neq 0$.
+\end{proof}
+
+\subsection{Sequences in \texorpdfstring{$\RR^k$}{Rk}}
+\begin{theorem}
+    We have the following:
+    \begin{enumerate}[(1)]
+        \item Suppose $(x_n)\in \RR^k$,
+              \[x_n = (x_n^1, \dots, x_n^k),\]
+              then $(x_n)$ converges to $x = (x^1, \dots, x^k)$ if and only if $\lim_{n\to\infty}x^j_n = x^j$ for all $1\leq j\leq k$.
+        \item Suppose $(x_n), (y_n)\in \RR^k, (\beta_n)\in \RR$ with $x_n\to x, y_n\to y, \beta_n\to\beta$. Then
+              \begin{itemize}
+                  \item $x_n + y_n\to x + y$.
+                  \item $x_ny_n\to xy$.
+                  \item $x_n\beta_n \to\beta x$.
+              \end{itemize}
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    ~\begin{enumerate}[(1)]
+        \item In the first direction, suppose $x_n \to x$. Then, given $\epsilon$, $\exists N$ such that $\forall n\geq N$, $|x_n - x| < \epsilon$.
+
+              We have that
+              \[|x^j_n - x^j| = \sqrt{(x^j_n - x^j)^2}\leq \sqrt{(x^1_n - x^1)^2 + \cdots + (x_n^k - x^k)^2} = |x_n - x|< \epsilon\]
+              gives $x_n^j\to x^j$.
+
+              In the other direction, suppose $x_n^j \to x^j$, $\forall 1\leq j\leq k$. Let $N_1, \dots, N_k$ be such that if $n\geq N_j$, then $|x_n^j - x^j| < \frac{\epsilon}{\sqrt{k}}$. Set $N = \max_{1\leq j\leq k} N_j$. Then $\forall n\geq N$:
+              \[|x_n - x| = \sqrt{(x^1_n - x^1)^2 + \cdots + (x_n^k - x^k)^2} < \epsilon \sqrt{\frac{1}{k}+ \cdots + \frac{1}{k}} = \epsilon\]
+    \end{enumerate}
+\end{proof}
+
